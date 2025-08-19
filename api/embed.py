@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import time
 import os
+import sys
 from gensim.models import KeyedVectors
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -12,10 +13,12 @@ print('Loading pre-converted word vectors...')
 
 load_start = time.time()
 
+base_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))
+
 coeff_bit_sizes = [40, 20, 20, 40]
 poly_mod_degree = 8192
 
-glove = KeyedVectors.load("/glove_vectors.kv") # Loading KV File for faster vector retreival
+glove = KeyedVectors.load(os.path.join(base_path, "glove_vectors.kv")) # Loading KV File for faster vector retreival
 
 # --- Encryption context setup
 context = ts.context(
